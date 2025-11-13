@@ -1,0 +1,172 @@
+Task 1:
+.model small
+.stack 100h
+.data
+.code
+main proc
+     mov cx,10  ;condition
+     mov dx,48       ;0 asci code
+     
+     digit:
+     mov ah,2
+     int 21h            ;output
+     inc dx              ;increement by 1
+     loop digit          ; call
+     
+     mov ah,4ch 
+     int 21h
+     main endp
+    end main
+Task 2:
+.model small
+.stack 100h 
+.data
+.code
+main proc 
+    mov cx,26  ;condition
+    mov dx,65 ;ascii of capital A
+    
+    AtoZ:  
+    
+    mov ah,2
+    int 21h 
+    
+    inc dx  
+    
+    loop AtoZ  
+    
+    mov ah,4ch 
+    int 21h 
+    main endp
+end main 
+Task 3:
+.model small
+.stack 100h
+
+.data
+msg1 db 'enter my number (0-9): $'
+msg2 db ,'my name is: $'
+msg3 db ,'Alisha $'
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax              
+    mov ah, 9               ;enter num
+    mov dx, offset msg1
+    int 21h    
+    mov ah, 1                ;input
+    int 21h                 
+    sub al, 48             ; convert ASCII to number
+    mov cx,0             
+    mov cl, al
+                 
+    mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+    mov ah, 9                 ;dislay 2nd msg
+    mov dx, offset msg2
+    int 21h
+    
+    mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+
+print_loop:
+    mov ah, 9
+    mov dx, offset msg3
+    int 21h
+    
+    mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h                 
+
+    loop print_loop         
+    mov ah, 4Ch
+    int 21h
+main endp
+end main
+Task 4:
+.model small
+.stack 100h
+.code
+main proc     
+    ;aeimquy print 
+    mov cx,7       ; total 7 letters
+    mov dx,97     ; start from 'a'
+
+sequence:
+    mov ah,2
+    int 21h        
+
+    add dx,4       
+    loop  sequence
+    
+    mov ah,4ch
+    int 21h
+main endp
+end main
+Task 5:
+.model small
+.stack 100h
+.data
+.code
+main proc
+    mov cx,26
+    mov dx,97
+    
+    small:
+    mov ah,2
+    int 21h  
+    
+    inc dx  ;increment by 1
+    loop small
+     mov ah,4ch 
+     int 21h
+     main endp
+end main
+Task 6 :
+.model small
+.stack 100h
+.code
+main proc
+    mov cx,4
+    mov dx,48
+    mov bl,0
+
+PRINTDIGIT:
+    mov ah,2
+    int 21h
+    mov al,dl
+    sub al,48
+    add bl,al
+    inc dl
+    loop PRINTDIGIT
+
+    ; print new line
+    mov ah,2
+    mov dl,13
+    int 21h
+    mov dl,10
+    int 21h
+
+    ; print sum
+    mov al,bl
+    add al,48
+    mov dl,al
+    mov ah,2
+    int 21h
+
+    mov ah,4ch
+    int 21h
+main endp
+end main
