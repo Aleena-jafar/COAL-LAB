@@ -1,0 +1,168 @@
+Task 1:
+;program to swap two numbers 
+.model small 
+.stack 100h 
+.data 
+.code 
+main proc 
+mov ax,'1'  
+; mov 1 to register ax 
+push ax    
+mov bx,'2' 
+push bx 
+pop ax 
+pop bx
+mov ah,4ch 
+int 21h 
+main endp 
+end main
+
+Task 2:
+;program to reverse a string 
+ 
+.model small 
+.data 
+string db 'Alisha$' 
+.code 
+main proc 
+mov ax, @data 
+mov ds, ax 
+mov si, offset string 
+mov cx,4 
+ 
+psh: 
+mov bx,[si] 
+push bx 
+inc si 
+loop psh 
+ 
+mov cx,4 
+ 
+pp: 
+pop dx 
+mov ah,2 
+int 21h 
+loop pp 
+ 
+mov ah,4ch 
+int 21h 
+main endp 
+end main 
+Task 3:
+.model small
+.stack 100h
+.data
+msg db 'Updated stack: $'
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+ 
+    mov ax, 450
+    push ax
+    mov ax, 0
+    push ax
+    mov ax, 487
+    push ax
+    mov ax, 101
+    push ax
+    mov ax, 500
+    push ax
+    mov ax, 0
+    push ax
+    mov ax, 359
+    push ax
+    mov ax, 0
+    push ax
+    mov ax, 458
+    push ax
+
+    mov dx, offset msg
+    mov ah, 9
+    int 21h
+
+    mov cx, 9        
+
+check_loop:
+    pop ax
+    cmp ax, 0
+    jz skip_zero     
+
+ 
+    push ax
+    push bx
+    push cx
+    push dx
+
+    mov bx, 10
+    mov cx, 0
+
+convert:
+    mov dx, 0
+    div bx
+    push dx
+    inc cx
+    cmp ax, 0
+    jnz convert
+
+display:
+    pop dx
+    add dl, '0'
+    mov ah, 2
+    int 21h
+    loop display
+
+    mov dl, ' '
+    mov ah, 2
+    int 21h
+
+    pop dx
+    pop cx
+    pop bx
+    pop ax
+   
+
+skip_zero:
+    loop check_loop
+
+    mov ah, 4Ch
+    int 21h
+main endp
+end main
+Task 4:
+.model small
+.stack 100h
+.data
+    str db "Enter Name to reverse$"
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+    mov si, offset str
+    mov cx, 0
+
+
+input_loop:
+    mov ah, 1       
+    int 21h
+    cmp al, 13        
+    je print_reverse
+    push ax           
+    inc cx
+    jmp input_loop
+
+print_reverse:
+print_loop:
+    pop dx
+    mov ah, 2
+    int 21h
+    loop print_loop
+
+    mov ah, 4Ch
+    int 21h
+main endp
+end main
