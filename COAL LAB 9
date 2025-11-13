@@ -1,0 +1,188 @@
+ Task # 1
+;Program to compare two digits
+
+.model small
+.stack 100h
+.data
+Msg1 DB "numbers are equal$"
+Msg2 DB "numbers are not equal$"
+.coDe
+ main proc
+     mov ax, @data 
+     mov ds, ax 
+     mov dl, '3'
+     mov ah, 1
+      int 21h
+       cmp al, dl
+        je label1
+mov dx, offset msg2 
+mov ah,9
+ int 21h
+  mov ah,4ch 
+  int 21h
+label1: mov dx, offset msg1 
+mov ah,9 
+int 21h 
+mov ah,4ch
+ int 21h
+  main endp
+ end main
+Task 2:
+;program to calculate sum of first ten natural numbers without using counter 
+org 100h 
+include emu8086.inc 
+ 
+.model small 
+.stack 100h 
+.data
+
+msg1 db 'sum = $' 
+.code 
+main proc 
+    mov bx, 0 
+    mov ax, 0 
+
+label1: 
+add ax, bx
+inc bx ;
+ 
+cmp bx, 10 
+Jle label1  
+
+main endp  
+ 
+call print_num 
+DEFINE_PRINT_NUM ; used by print_num proc 
+DEFINE_PRINT_NUM_UNS ; used by print_num proc end main 
+ret
+Task 3:
+; Compare two numbers using jump conditions
+;Compare two numbers by taking input from user and jump to different sections of code to show if Numbers are equal, numbers are not equal, number is greater/less
+
+.model small
+.stack 100h
+.data
+msg1 db 'Enter first number (0-9): $'
+msg2 db  'Enter second number (0-9): $'
+equal db  'Both numbers are equal.$'
+greater db  'First number is greater.$'
+less db  'First number is smaller.$'
+notequal db  'Numbers are not equal.$'
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+    ; Input first number
+    mov ah, 09h
+    mov dx, offset msg1
+    int 21h  
+    
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+
+    mov ah, 01h
+    int 21h
+    sub al, 30h
+    mov bl, al  
+    
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h      
+
+    ; Input second number
+    mov ah, 09h
+    mov dx, offset msg2
+    int 21h           
+    
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+
+    mov ah, 01h
+    int 21h
+    sub al, 30h
+    mov bh, al        ; store second number   
+    
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+
+    ; Compare both numbers
+    cmp bl, bh
+    je equal_label     ; if equal ? jump to equal
+    jne notequal_label ; if not equal ? jump to notequal
+
+equal_label:
+    mov ah, 09h
+    mov dx, offset equal
+    int 21h 
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+  mov ah, 4Ch
+    int 21h
+    
+notequal_label:
+    mov ah, 09h
+    mov dx, offset notequal
+    int 21h    
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+
+    cmp bl, bh
+    jg greater_label
+    jl less_label
+   mov ah, 4Ch
+    int 21h
+    
+greater_label:
+    mov ah, 09h
+    mov dx, offset greater
+    int 21h             
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+   mov ah, 4Ch
+    int 21h
+
+less_label:
+    mov ah, 09h
+    mov dx, offset less 
+    int 21h  
+     mov dx,10
+    mov ah,2
+    int 21h
+    mov dx,13
+    mov ah,2
+    int 21h
+
+
+    mov ah, 4Ch
+    int 21h
+main endp
+end main
