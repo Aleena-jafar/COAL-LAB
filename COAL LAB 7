@@ -1,0 +1,290 @@
+Task 1:
+;Write an assembly language program that find the square of a number entered by user. Print the result on screen.
+.model small
+.stack 100h
+.data
+    msg1 db 'Enter a number (0-9): $'
+    msg2 db 0Dh,0Ah, 'Square is: $'
+    num db ?
+    result db ?
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+   
+    mov ah, 9
+    lea dx, msg1
+    int 21h
+
+        
+    mov ah, 1
+    int 21h
+    sub al, 30h       
+    mov num, al
+
+    ; Square the number: result = num * num
+    mov al, num
+    mov bl, num
+    mul bl             
+    
+   
+    mov result, al
+
+    
+    mov ah, 9
+    lea dx, msg2
+    int 21h
+
+    
+    mov al, result
+    aam                
+    mov bx, ax
+    add bh, 30h       
+    add bl, 30h        
+    mov dl, bh
+    mov ah, 2
+    int 21h
+    mov dl, bl
+    int 21h
+
+    ; Exit program
+    mov ah, 4Ch
+    int 21h
+
+main endp
+end main
+Task 2:
+;Write an assembly language program that find the cube of a number entered by user. Print the result on screen.
+
+.model small  
+.STACK 100H
+.data  
+    msg1 db 'Enter number (0-2): $'
+    msg2 db 13,10,'Cube: $'
+
+.code 
+main proc
+    mov ax, @data
+    mov ds, ax
+
+   
+    mov ah, 9
+    mov dx, offset msg1
+    int 21h
+
+    ; Read input
+    mov ah, 1
+    int 21h
+
+   
+    sub al, 30h ;ascii 
+    mov bl, al
+    mul bl
+    mul bl
+
+   
+    mov bl, al
+    mov ah, 9
+    mov dx, offset msg2
+    int 21h
+
+    mov dl, bl
+    add dl, 30h
+    mov ah, 2
+    int 21h
+
+   
+    mov ah, 4ch
+    int 21h
+
+main endp
+end main
+Task 3:
+;Perform multiplication of two numbers entered by user. Print the result on screen.
+.model small
+.stack 100h
+.data
+    msg1 db "Enter first number: $"
+    msg2 db 13,10,"Enter second number: $"
+    msg3 db 13,10,"Product = $"
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+    ; Input first number
+    mov ah, 9
+    lea dx, msg1
+    int 21h
+    mov ah, 1
+    int 21h
+    sub al, 30h
+    mov bl, al
+
+    ; Input second number
+    mov ah, 9
+    lea dx, msg2
+    int 21h
+    mov ah, 1
+    int 21h
+    sub al, 30h
+    mov bh, al
+
+    ; Multiply
+    mov al, bl
+    mul bh
+
+    ; Display result
+    mov ah, 9
+    lea dx, msg3
+    int 21h
+
+    aam
+    add ah, 30h
+    add al, 30h
+
+    mov dl, ah
+    mov ah, 2
+    int 21h
+    mov dl, al
+    int 21h
+
+    mov ah, 4Ch
+    int 21h
+main endp
+end main
+Task 4:
+;Write an assembly language program that finds the area of a triangle.
+.model small
+.stack 100h
+.data
+    msg1 db "Enter base: $"
+    msg2 db 13,10,"Enter height: $"
+    msg3 db 13,10,"Area = $"
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+    ; Input base
+    mov ah, 9
+    lea dx, msg1
+    int 21h
+    mov ah, 1
+    int 21h
+    sub al, 30h
+    mov bl, al
+
+    ; Input height
+    mov ah, 9
+    lea dx, msg2
+    int 21h
+    mov ah, 1
+    int 21h
+    sub al, 30h
+    mov bh, al
+
+    ; Area = (base * height) / 2
+    mov al, bl
+    mul bh        ; AX = base * height
+    mov bl, 2
+    div bl        ; AL = result / 2
+
+    ; Display result
+    mov ah, 9
+    lea dx, msg3
+    int 21h
+
+    add al, 30h
+    mov dl, al
+    mov ah, 2
+    int 21h
+
+    mov ah, 4Ch
+    int 21h
+main endp
+end main
+
+Task 5:
+.model small
+.stack 100h
+.data
+.code
+main proc
+         mov al,3
+         mov bl,2
+         mul bl
+         mov dx,ax
+         add dx,48
+         
+         mov ah,2
+         int 21h
+         
+         mov ah,4ch
+         int 21h
+         
+    
+    
+    main endp
+   end main
+Task 6:
+.model small
+.stack 100h
+.data  
+r db 'Remainder= $'
+q db 'Quotient= $'
+
+
+.code
+main proc
+         mov ax,27
+         mov bl,5
+         div bl
+         mov cl,al
+         mov ch,ah
+         
+         mov ax,@data
+         mov ds,ax
+         mov dx,offset q
+         mov ah,9
+         int 21h
+         
+         mov dl,cl
+         add dl,48
+         mov ah,2
+         int 21h
+         
+         mov dx,10
+         mov ah,2
+         int 21h
+         
+         mov dx,13
+         mov ah,2
+         int 21h  
+         
+         mov ax,@data
+         mov ds,ax
+         mov dx,offset r
+         mov ah,9
+         int 21h    
+         
+         mov dl,ch
+        add dl,48
+         mov ah,2
+         int 21h
+         
+         
+    
+         
+         mov ah,4ch
+         int 21h
+       
+    
+    
+     main endp 
+   end main
+   
