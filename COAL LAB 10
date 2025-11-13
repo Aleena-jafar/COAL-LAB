@@ -1,0 +1,66 @@
+Task 1:
+
+
+.model small 
+.stack 100h
+.data 
+     a1 db 49,50,51,52,53 ; ascii for 1,2,3,4,5
+.code
+main proc 
+    
+    mov ax,@data ;  address of data segment 
+    mov ds,ax   
+    
+    mov si,offset a1 ;  mov  a1 address into 'si' register  
+    mov dx,[si]   ;   mov value from  si register  to dx 
+    
+    mov ah,2
+     int 21h
+     
+     mov dx,[si+1] ; increment and move to next one 
+     mov ah,2
+     int 21h 
+     
+      mov dx,[si+2]  ;  mov 2 step forward from si address 
+      mov ah,2
+      int 21h 
+      
+       mov dx,[si+3]   ; mov 3 step forward 
+          mov ah,2
+      int 21h  
+      
+        mov ah,4ch
+         int 21h
+          main endp
+end main
+
+Task 2:
+; Program to print array elements using loop
+
+.model small
+.stack 100h
+.data     
+arr DB 49,50,51,52      ; ASCII codes for '1', '2', '3', '4'
+
+.code
+main proc
+    
+    mov ax, @data        ; Initialize data segment
+    mov ds, ax  
+
+    mov si, offset arr   ; SI points to first element of array
+    mov cx, 4            ; Number of elements to print
+
+loopx:
+    mov dl, [si]         ; Load current array value into DL
+    mov ah, 2            ; DOS print character function
+    int 21h              ; Display character
+
+    inc si               ; Move to next element
+    loop loopx           ; Repeat until CX = 0
+
+    mov ah, 4Ch          ; Exit program
+    int 21h
+
+main endp
+end main
